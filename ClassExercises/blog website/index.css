@@ -1,0 +1,80 @@
+body {
+    font-family: 'Assistant', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.blog-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.post-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.post-card:nth-child(1) .post-text {
+    font-family: 'Poppins', sans-serif;
+}
+
+.post-card:nth-child(2) .post-text {
+    font-family: 'Playfair Display', sans-serif;
+}
+
+.post-card:nth-child(3) .post-text {
+    font-family: 'Caveat', serif;
+}
+
+.post-text::first-letter {
+    font-size: 2em;
+    font-weight: bold;
+    color: #0066cc;
+}
+
+.post-text::first-line {
+    font-weight: bold;
+    color: #333333;
+}
+
+.delete-btn {
+    background-color: #cccccc;
+    color: #333333;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #ff3333;
+    color: #ffffff;
+}
+
+.card-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.post-card:has(.dark-mode-toggle:checked) {
+    background-color: #222222;
+    color: #ffffff;
+}
+
+.post-card:has(.dark-mode-toggle:checked) .post-text::first-letter {
+    color: #66b3ff;
+}
+
+.post-card:has(.dark-mode-toggle:checked) .post-text::first-line {
+    color: #ffffff;
+}
