@@ -8,33 +8,103 @@
 </head>
 <body>
     <div class="top-bar">
-        <button class="pro-button">☰</button>
+        <button class="pro-button">🛡️</button>
         <h1 class="title">SIGINT OPS</h1>
         <button class="online-button">SECURE ONLINE</button>
     </div>
 
-    <main>
+    <main class="main-container">
         <div class="card">
             <div class="radar-container">
                 <div class="radar">
                     <div class="sweep"></div>
+                    <div class="blip blip-1"></div>
+                    <div class="blip blip-2"></div>
+                    <div class="blip blip-3"></div>
                 </div>
             </div>
             <div class="card-info">
-                <h3>24</h3>
-                <p>active signals</p>
-                <h3>07</h3>
-                <p>priority</p>
+                <div class="stat-group">
+                    <h3>24</h3>
+                    <p>active signals</p>
+                </div>
+                <div class="stat-group">
+                    <h3>07</h3>
+                    <p>priority alerts</p>
+                </div>
             </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-btn">+ New Brief</button>
+            <button class="action-btn">&lt;&gt; Decode</button>
+            <button class="action-btn"># Request Drone</button>
+        </div>
+
+        <div class="missions-grid">
+            <!-- משימה 1 -->
+            <div class="mission-card critical">
+                <div class="mission-header">
+                    <span class="badge red">CRITICAL</span>
+                    <span class="status">In Progress</span>
+                </div>
+                <h4>Operation Nightfall</h4>
+                <div class="progress-bar"><div class="fill red" style="width: 65%;"></div></div>
+                <span class="progress-text">65%</span>
+            </div>
+            <!-- משימה 2 -->
+            <div class="mission-card high">
+                <div class="mission-header">
+                    <span class="badge orange">HIGH</span>
+                    <span class="status">Analyzing</span>
+                </div>
+                <h4>Signal Intercept Alpha</h4>
+                <div class="progress-bar"><div class="fill orange" style="width: 40%;"></div></div>
+                <span class="progress-text">40%</span>
+            </div>
+            <!-- משימה 3 -->
+            <div class="mission-card medium">
+                <div class="mission-header">
+                    <span class="badge green">MEDIUM</span>
+                    <span class="status">Pending</span>
+                </div>
+                <h4>Asset Recovery</h4>
+                <div class="progress-bar"><div class="fill green" style="width: 15%;"></div></div>
+                <span class="progress-text">15%</span>
+            </div>
+            <div class="mission-card high">
+                <div class="mission-header">
+                    <span class="badge orange">HIGH</span>
+                    <span class="status">Active</span>
+                </div>
+                <h4>Cyber Defense Grid</h4>
+                <div class="progress-bar"><div class="fill orange" style="width: 88%;"></div></div>
+                <span class="progress-text">88%</span>
+            </div>
+        </div>
+            <!-- פס התרעה אדום בתחתית -->
+        <div class="threat-banner">
+            <span class="red-dot"></span>
+            <span>THREAT DETECTED</span>
         </div>
     </main>
 
-    <div class="bottom-bar">
-        <button class="bottom-button">📄</button>
-        <button class="bottom-button">📰</button>
-        <button class="bottom-button">📊</button>
-        <button class="bottom-button">❓</button>
-        <button class="bottom-button">⚙️</button>
-    </div>
+    <nav class="bottom-bar">
+        <div class="nav-item active">
+             <span>📊</span>
+             <span>Dashboard</span>
+        </div>
+        <div class="nav-item">
+             <span>📶</span>
+             <span>Feed</span>
+        </div>
+        <div class="nav-item">
+             <span>📄</span>
+             <span>Brief</span>
+        </div>
+        <div class="nav-item">
+             <span>❓</span>
+        </div>
+    </nav>
 </body>
 </html>
