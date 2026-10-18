@@ -1,6 +1,8 @@
 body {
     margin: 0;
     font-family: sans-serif;
+    background: linear-gradient(135deg, rgba(222, 182, 248, 0.6), rgba(255, 209, 164, 0.6));
+    min-height: 100vh;
 }
 
 .navbar {
