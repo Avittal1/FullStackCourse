@@ -1,28 +1,52 @@
 * {
-   background: rgb(41, 40, 40);
+   color: #888589;
+   box-sizing: border-box;
+   font-family: monospace, sans-serif;
+}
+
+body {
+    background: #0E0D12;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .top-bar {
     background: rgb(0, 0, 0);
-    padding: 10px;
+    padding: 14px 20px;
+    margin: 0 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #1a1924;
 }
 
 .pro-button {
     background: #00D837;
     color: black;
     border: none;
-    padding: 10px 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.pro-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px #02ff41b6;
 }
 
 .title {
-    background: rgb(0, 0, 0);
     color: #267234;
     margin: 0;
-    font-size: 20px;
+    font-size: 18px;
+    letter-spacing: 2px;
 }
 
 .online-button {
@@ -30,20 +54,334 @@
     color: #0E8630;
     border: none;
     padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 12px;
     cursor: pointer;
 }
 
-.bottom-bar {
-    background: rgb(0, 0, 0);
+.online-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background-color: #00D837;
+    border-radius: 50%;
+    margin-right: 6px;
+    box-shadow: 0 0 6px #00D837;
+    animation: blink-dot 1.5s infinite ease-in-out;
+}
+
+@keyframes blink-dot {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.main-container {
+    flex: 1;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.card {
+    background: #14111B;
+    border: 1px solid #221E2E;
+    border-radius: 10px;
+    width: 100%;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.card:hover {
+   border-color: #00D837;
+}
+
+.radar-container {
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.bottom-button {
-    background: #07221300;
-    color: grey;
-    border: none;
-    padding: 10px 20px;
+.radar, .sweep { position: absolute; }
+
+.radar {
+  position: relative;
+  overflow: hidden; 
+  width: 170px; 
+  height: 170px;
+  border-radius: 50%;
+
+    /* מסגרת ירוקה עדינה וחיצונית בדיוק כמו בתמונה */
+    box-shadow: 0 0 0 1px hsla(145, 50%, 50%, 0.5),
+                inset 0 0 0 1px hsla(145, 50%, 50%, 0.5);
+    /* רקע כהה נקי עם צירים אופקי ואנכי מדויקים במרכז */
+    background: 
+        linear-gradient(to right, transparent 49.75%, #0e4c42 0 50.25%, transparent 0) 50% no-repeat,
+        linear-gradient(to bottom, transparent 49.75%, #0e4c42 0 50.25%, transparent 0) 50% no-repeat,
+        radial-gradient(circle, #141720 0%, #120F18 80%, #000000 100%);
+    background-size: 100% 100%, 100% 100%, 100% 100%;
+}
+
+.sweep {
+    box-sizing: border-box;
+    top: 0; left: 0;
+    width: 85px; 
+    height: 85px;
+    border-right: solid 1px hsla(145, 80%, 50%, 0.6);
+    border-radius: 100% 0 0 0;
+    transform-origin: 100% 100%;
+    background: linear-gradient(50deg, rgba(0, 0, 0, 0) 50%, hsla(145, 70%, 40%, 0.85));
+    animation: sweep 5s infinite linear;
+}
+
+.blip {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #00D837;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #00D837;
+    z-index: 2;
+    animation: pulse-blip 1s infinite ease-in-out;
+}
+
+@keyframes pulse-blip {
+    50%, 80%, 100% {
+        opacity: 0.8;
+        box-shadow: 0 0 3px #00D837;
+    }
+    85% {
+        opacity: 1;
+        box-shadow: 0 0 10px #00D837, 0 0 20px rgba(0, 216, 55, 0.5);
+    }
+}
+
+.blip-1 { top: 35px; left: 105px; }
+.blip-2 { top: 105px; left: 45px; }
+.blip-3 { top: 85px; left: 120px; }
+
+@keyframes sweep { to { transform: rotate(360deg); } }
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.stat-group h3 {
+    margin: 0;
+    font-size: 24px;
+    color: #00D837;
+}
+
+.stat-group p {
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.action-btn {
+    /*background: #14111B;
+    border: 1px solid #221E2E;
+    color: #ccc;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
     cursor: pointer;
+    transition: all 0.3s ease;*/
+
+    background: #14111B;
+    border: 1px solid #221E2E;
+    color: #ccc;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-icon {
+    width: 14px;
+    height: 14px; 
+    object-fit: contain;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    background: #072213;
+    border-color: #028523;
+
+}
+
+.missions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+.mission-card {
+    background: #14111B;
+    border: 1px solid #221E2E;
+    border-radius: 8px;
+    border-left: 4px solid transparent;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.mission-card:hover {
+   border-color: #00D837;
+    transform: translate(-4px, -4px) rotate(1.5deg); 
+    box-shadow: 0 6px 16px rgba(0, 216, 55, 0.2);
+}
+
+.mission-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+}
+
+.mission-card.critical {
+    border-left-color: #ff3366;
+}
+
+.mission-card.high {
+    border-left-color: #ffaa00;
+}
+
+.mission-card.medium {
+    border-left-color: #00D837;
+}
+
+.badge {
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.badge.red { background: #3a1119; color: #ff3366; border: 1px solid #ff336655; }
+.badge.orange { background: #3a2b11; color: #ffaa00; border: 1px solid #ffaa0055; }
+.badge.green { background: #113a1f; color: #00D837; border: 1px solid #00D83755; }
+
+.mission-card h4 {
+    margin: 0;
+    font-size: 13px;
+    color: #fff;
+}
+
+.progress-bar {
+    background: #1e1b29;
+    height: 4px;
+    border-radius: 2px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+}
+.fill.red { background: #ff3366; }
+.fill.orange { background: #ffaa00; }
+.fill.green { background: #00D837; }
+
+.progress-text {
+    font-size: 10px;
+    text-align: right;
+}
+
+/* פס התרעה אדום */
+.threat-banner {
+    background: #2b1117;
+    border: 1px solid #661a29;
+    color: #ff3366;
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.threat-banner:hover {
+    transform: scale(1.02); /* מגדיל את הפס ב-2% (אפשר לשנות ל-1.03 אם תרצי קצת יותר) */
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.3); /* מוסיף זוהר אדום עדין מסביב */
+    cursor: pointer;
+}
+
+.red-dot {
+    width: 8px;
+    height: 8px;
+    background: #ff3366;
+    border-radius: 50%;
+}
+
+.bottom-bar {
+    background: #000000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    border-top: 1px solid #1a1924;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 11px;
+    color: #666;
+    cursor: pointer;
+    gap: 3px;
+}
+
+.nav-item.active {
+    color: #00D837;
+}
+.nav-item:hover{
+    color: #00D837;
+}
+
+.nav-icon, .btn-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    transition: filter 0.3s ease;
+}
+
+
+.nav-item:hover .btn-icon,
+.action-btn:hover .btn-icon{
+    filter: brightness(0) saturate(100%) invert(56%) sepia(87%) saturate(1243%) hue-rotate(95deg) brightness(98%) contrast(101%);
 }

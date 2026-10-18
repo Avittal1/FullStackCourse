@@ -8,27 +8,116 @@
 </head>
 <body>
     <div class="top-bar">
-        <button class="pro-button">☰</button>
+        <button class="pro-button">
+            <img src="images/shield.svg" alt="Shield" class="btn-icon" />
+        </button>
         <h1 class="title">SIGINT OPS</h1>
-        <button class="online-button">SECURE ONLINE</button>
+        <button class="online-button">
+            <span class="online-dot"></span> SECURE ONLINE
+        </button>
     </div>
 
-    <main>
-        <div class="content">
-            <h2>Intelligence Information Management</h2>
-            <p>Welcome to the Intelligence Information Management system. This platform is designed to facilitate the collection, analysis, and dissemination of intelligence data.</p>
-            <p>Use the navigation menu to access different sections of the system.</p>
+    <main class="main-container">
+        <div class="card">
+            <div class="radar-container">
+                <div class="radar">
+                    <div class="sweep"></div>
+                    <div class="blip blip-1"></div>
+                    <div class="blip blip-2"></div>
+                    <div class="blip blip-3"></div>
+                </div>
+            </div>
+            <div class="card-info">
+                <div class="stat-group">
+                    <h3>24</h3>
+                    <p>active signals</p>
+                </div>
+                <div class="stat-group">
+                    <h3>07</h3>
+                    <p>priority alerts</p>
+                </div>
+            </div>
         </div>
 
-        
+        <div class="action-buttons">
+            <button class="action-btn">
+                <img src="images/zap.svg" alt="Brief" class="btn-icon" />
+                New Brief
+            </button>
+            <button class="action-btn" >
+                <img src="images/code.svg" alt="Decode" class="btn-icon" />
+                Decode
+            </button>
+            <button class="action-btn">
+                <img src="images/rocket.svg" alt="Drone" class="btn-icon" />
+                Request Drone
+            </button>
+        </div>
+
+        <div class="missions-grid">
+            
+            <div class="mission-card critical">
+                <div class="mission-header">
+                    <span class="badge red">CRITICAL</span>
+                    <span class="status">In Progress</span>
+                </div>
+                <h4>Operation Nightfall</h4>
+                <div class="progress-bar"><div class="fill red" style="width: 65%;"></div></div>
+                <span class="progress-text">65%</span>
+            </div>
+            
+            <div class="mission-card high">
+                <div class="mission-header">
+                    <span class="badge orange">HIGH</span>
+                    <span class="status">Analyzing</span>
+                </div>
+                <h4>Signal Intercept Alpha</h4>
+                <div class="progress-bar"><div class="fill orange" style="width: 40%;"></div></div>
+                <span class="progress-text">40%</span>
+            </div>
+            
+            <div class="mission-card medium">
+                <div class="mission-header">
+                    <span class="badge green">MEDIUM</span>
+                    <span class="status">Pending</span>
+                </div>
+                <h4>Asset Recovery</h4>
+                <div class="progress-bar"><div class="fill green" style="width: 15%;"></div></div>
+                <span class="progress-text">15%</span>
+            </div>
+
+            <div class="mission-card high">
+                <div class="mission-header">
+                    <span class="badge orange">HIGH</span>
+                    <span class="status">Active</span>
+                </div>
+                <h4>Cyber Defense Grid</h4>
+                <div class="progress-bar"><div class="fill orange" style="width: 88%;"></div></div>
+                <span class="progress-text">88%</span>
+            </div>
+        </div>
+        <div class="threat-banner">
+            <span class="red-dot"></span>
+            <span>THREAT DETECTED</span>
+        </div>
     </main>
 
-    <div class="bottom-bar">
-        <button class="bottom-button">📄</button>
-        <button class="bottom-button">📰</button>
-        <button class="bottom-button">📊</button>
-        <button class="bottom-button">❓</button>
-        <button class="bottom-button">⚙️</button>
-    </div>
+    <nav class="bottom-bar">
+        <div class="nav-item">
+                <img src="images/activity.svg" alt="Dashboard" class="btn-icon" />
+             <span>Dashboard</span>
+        </div>
+        <div class="nav-item">
+             <img src="images/radio.svg" alt="Feed" class="btn-icon" />
+             <span>Feed</span>
+        </div>
+        <div class="nav-item">
+             <img src="images/file-text.svg" alt="Brief" class="btn-icon" />
+             <span>Brief</span>
+        </div>
+        <div class="nav-item">
+             <span>❓</span>
+        </div>
+    </nav>
 </body>
 </html>
