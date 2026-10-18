@@ -34,10 +34,15 @@ body {
     justify-content: center;
     cursor: pointer;
     font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.pro-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px #02ff41b6;
 }
 
 .title {
-    /*background: rgb(0, 0, 0);*/
     color: #267234;
     margin: 0;
     font-size: 18px;
@@ -52,6 +57,26 @@ body {
     border-radius: 4px;
     font-size: 12px;
     cursor: pointer;
+}
+
+.online-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background-color: #00D837;
+    border-radius: 50%;
+    margin-right: 6px;
+    box-shadow: 0 0 6px #00D837;
+    animation: blink-dot 1.5s infinite ease-in-out;
+}
+
+@keyframes blink-dot {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 .main-container {
@@ -126,7 +151,21 @@ body {
     background: #00D837;
     border-radius: 50%;
     box-shadow: 0 0 6px #00D837;
+    z-index: 2;
+    animation: pulse-blip 1s infinite ease-in-out;
 }
+
+@keyframes pulse-blip {
+    50%, 80%, 100% {
+        opacity: 0.8;
+        box-shadow: 0 0 3px #00D837;
+    }
+    85% {
+        opacity: 1;
+        box-shadow: 0 0 10px #00D837, 0 0 20px rgba(0, 216, 55, 0.5);
+    }
+}
+
 .blip-1 { top: 35px; left: 105px; }
 .blip-2 { top: 105px; left: 45px; }
 .blip-3 { top: 85px; left: 120px; }
@@ -159,6 +198,15 @@ body {
 }
 
 .action-btn {
+    /*background: #14111B;
+    border: 1px solid #221E2E;
+    color: #ccc;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;*/
+
     background: #14111B;
     border: 1px solid #221E2E;
     color: #ccc;
@@ -166,6 +214,23 @@ body {
     border-radius: 20px;
     font-size: 12px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-icon {
+    width: 14px;
+    height: 14px; 
+    object-fit: contain;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    background: #072213;
+    border-color: #028523;
+
 }
 
 .missions-grid {
@@ -184,6 +249,14 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.mission-card:hover {
+   border-color: #00D837;
+    transform: translate(-4px, -4px) rotate(1.5deg); 
+    box-shadow: 0 6px 16px rgba(0, 216, 55, 0.2);
 }
 
 .mission-header {
@@ -256,6 +329,13 @@ body {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.threat-banner:hover {
+    transform: scale(1.02); /* מגדיל את הפס ב-2% (אפשר לשנות ל-1.03 אם תרצי קצת יותר) */
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.3); /* מוסיף זוהר אדום עדין מסביב */
+    cursor: pointer;
 }
 
 .red-dot {
@@ -288,11 +368,20 @@ body {
 .nav-item.active {
     color: #00D837;
 }
-/*
-.bottom-button {
-    background: #07221300;
-    color: grey;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-}*/
+.nav-item:hover{
+    color: #00D837;
+}
+
+.nav-icon, .btn-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    transition: filter 0.3s ease;
+}
+
+
+.nav-item:hover .btn-icon,
+.action-btn:hover .btn-icon{
+    filter: brightness(0) saturate(100%) invert(56%) sepia(87%) saturate(1243%) hue-rotate(95deg) brightness(98%) contrast(101%);
+}

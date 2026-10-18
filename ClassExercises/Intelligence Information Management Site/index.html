@@ -8,9 +8,13 @@
 </head>
 <body>
     <div class="top-bar">
-        <button class="pro-button">🛡️</button>
+        <button class="pro-button">
+            <img src="images/shield.svg" alt="Shield" class="btn-icon" />
+        </button>
         <h1 class="title">SIGINT OPS</h1>
-        <button class="online-button">SECURE ONLINE</button>
+        <button class="online-button">
+            <span class="online-dot"></span> SECURE ONLINE
+        </button>
     </div>
 
     <main class="main-container">
@@ -36,13 +40,22 @@
         </div>
 
         <div class="action-buttons">
-            <button class="action-btn">+ New Brief</button>
-            <button class="action-btn">&lt;&gt; Decode</button>
-            <button class="action-btn"># Request Drone</button>
+            <button class="action-btn">
+                <img src="images/zap.svg" alt="Brief" class="btn-icon" />
+                New Brief
+            </button>
+            <button class="action-btn" >
+                <img src="images/code.svg" alt="Decode" class="btn-icon" />
+                Decode
+            </button>
+            <button class="action-btn">
+                <img src="images/rocket.svg" alt="Drone" class="btn-icon" />
+                Request Drone
+            </button>
         </div>
 
         <div class="missions-grid">
-            <!-- משימה 1 -->
+            
             <div class="mission-card critical">
                 <div class="mission-header">
                     <span class="badge red">CRITICAL</span>
@@ -52,7 +65,7 @@
                 <div class="progress-bar"><div class="fill red" style="width: 65%;"></div></div>
                 <span class="progress-text">65%</span>
             </div>
-            <!-- משימה 2 -->
+            
             <div class="mission-card high">
                 <div class="mission-header">
                     <span class="badge orange">HIGH</span>
@@ -62,7 +75,7 @@
                 <div class="progress-bar"><div class="fill orange" style="width: 40%;"></div></div>
                 <span class="progress-text">40%</span>
             </div>
-            <!-- משימה 3 -->
+            
             <div class="mission-card medium">
                 <div class="mission-header">
                     <span class="badge green">MEDIUM</span>
@@ -72,6 +85,7 @@
                 <div class="progress-bar"><div class="fill green" style="width: 15%;"></div></div>
                 <span class="progress-text">15%</span>
             </div>
+
             <div class="mission-card high">
                 <div class="mission-header">
                     <span class="badge orange">HIGH</span>
@@ -82,7 +96,6 @@
                 <span class="progress-text">88%</span>
             </div>
         </div>
-            <!-- פס התרעה אדום בתחתית -->
         <div class="threat-banner">
             <span class="red-dot"></span>
             <span>THREAT DETECTED</span>
@@ -90,16 +103,16 @@
     </main>
 
     <nav class="bottom-bar">
-        <div class="nav-item active">
-             <span>📊</span>
+        <div class="nav-item">
+                <img src="images/activity.svg" alt="Dashboard" class="btn-icon" />
              <span>Dashboard</span>
         </div>
         <div class="nav-item">
-             <span>📶</span>
+             <img src="images/radio.svg" alt="Feed" class="btn-icon" />
              <span>Feed</span>
         </div>
         <div class="nav-item">
-             <span>📄</span>
+             <img src="images/file-text.svg" alt="Brief" class="btn-icon" />
              <span>Brief</span>
         </div>
         <div class="nav-item">
