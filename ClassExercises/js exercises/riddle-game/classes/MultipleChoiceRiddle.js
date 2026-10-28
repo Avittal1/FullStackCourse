@@ -16,7 +16,17 @@ export default class MultipleChoiceRiddle extends Riddle {
 
 
     while (true) {
-      let userAnswer = readline.question("Choose the correct option (number): ");
+      let userAnswer = readline.question(`${this.taskDescription} (Type 'hint' for a clue): `);
+
+      if (userAnswer.toLowerCase() === 'hint') {
+          if (this.hint) {
+              console.log(`💡 Hint: ${this.hint}`);
+              this.usedHint = true;
+          } else {
+              console.log("Sorry, no hint available for this riddle.");
+          }
+          continue;
+      }
 
       if (this.compare(userAnswer)) {
         console.log("Correct!\n");

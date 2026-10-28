@@ -3,5 +3,8 @@ export default {
   id: 2,
   name: "Mystery",
   taskDescription: "I speak without a mouth. What am I??",
-  correctAnswer: "echo"
+  correctAnswer: "echo",
+  difficulty: "medium",
+  timeLimit: 20,
+  hint: "Think about sound bouncing back."
 };
