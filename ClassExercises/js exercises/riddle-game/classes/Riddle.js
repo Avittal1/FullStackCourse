@@ -11,7 +11,7 @@ export class Riddle {
     ask() {
         console.log(`\nRiddle ${this.id}: ${this.name}`);
         while (true) {
-            const userAnswer = readline.question(`${this.taskDescription} → `);
+            const userAnswer = readline.question(`${this.taskDescription}: `);
             
             if (this.compare(userAnswer)) {
                 console.log("Correct!");
