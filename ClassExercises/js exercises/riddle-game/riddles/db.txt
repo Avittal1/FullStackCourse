@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "Easy Math",
+    "taskDescription": "What is 5 + 3?",
+    "correctAnswer": "8",
+    "difficulty": "easy",
+    "timeLimit": 10,
+    "hint": "Think about basic addition (5 + ?)"
+  },
+  {
+    "id": 2,
+    "name": "Mystery",
+    "taskDescription": "I speak without a mouth. What am I??",
+    "correctAnswer": "echo",
+    "difficulty": "medium",
+    "timeLimit": 20,
+    "hint": "Think about sound bouncing back."
+  },
+  {
+    "id": 3,
+    "name": "Multiple Choice JS",
+    "taskDescription": "Which keyword is used to declare a constant in JavaScript?",
+    "choices": [
+      "var",
+      "let",
+      "const",
+      "static"
+    ],
+    "correctAnswer": "3",
+    "difficulty": "medium",
+    "timeLimit": 30,
+    "hint": "Think about the word 'constant'."
+  },
+  {
+    "id": 4,
+    "name": "JS Basics",
+    "taskDescription": "What type does typeof null return in JS?",
+    "correctAnswer": "object",
+    "difficulty": "easy",
+    "timeLimit": 15,
+    "hint": "Think about JavaScript historical bugs"
+  }
+]
