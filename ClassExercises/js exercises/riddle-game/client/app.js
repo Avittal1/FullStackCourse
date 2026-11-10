@@ -1,26 +1,20 @@
 import readline from 'readline-sync';
-import fs from 'fs';
+import { Riddle } from '../classes/Riddle.js';
+import MultipleChoiceRiddle from '../classes/MultipleChoiceRiddle.js';
 
-import { Riddle } from './classes/Riddle.js';
-import { Player } from './classes/Player.js';
-import MultipleChoiceRiddle from './classes/MultipleChoiceRiddle.js';
-const dbPath = './riddles/db.txt';
+const SERVER_URL = 'http://localhost:3000/api';
 
-function loadRiddlesDB() {
-    if (!fs.existsSync(dbPath)) return [];
-    const data = fs.readFileSync(dbPath, 'utf8');
+async function loadRiddlesDB() {
     try {
-        return JSON.parse(data);
+        const response = await fetch(`${SERVER_URL}/riddles`);
+        return await response.json();
     } catch (e) {
+        console.error("Error connecting to server:", e.message);
         return [];
     }
 }
 
-function saveRiddlesDB(riddles) {
-    fs.writeFileSync(dbPath, JSON.stringify(riddles, null, 2));
-}
-
-const shuffleArray = (array) => {
+function shuffleArray(array) {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -29,7 +23,7 @@ const shuffleArray = (array) => {
   return arr;
 };
 
-function mainMenu() {
+async function mainMenu() {
     while (true) {
         console.log("\n=== RIDDLE GAME MENU ===");
         console.log("1. Play the game");
@@ -44,22 +38,22 @@ function mainMenu() {
 
         switch (choice) {
             case '1':
-                playGame();
+                await playGame();
                 break;
             case '2':
-                createRiddle();
+                await createRiddle();
                 break;
             case '3':
-                readRiddles();
+                await readRiddles();
                 break;
             case '4':
-                updateRiddle();
+                await updateRiddle();
                 break;
             case '5':
-                deleteRiddle();
+                await deleteRiddle();
                 break;
             case '6':
-                Player.showLeaderboard();
+                await showLeaderboard();
                 break;
             case '7':
                 console.log("Goodbye!");
@@ -70,15 +64,29 @@ function mainMenu() {
     }
 }
 
-function playGame() {
-    const riddlesData = loadRiddlesDB();
+async function playGame() {
+    const riddlesData = await loadRiddlesDB();
     if (riddlesData.length === 0) {
         console.log("No riddles found in database! Please create some first.");
         return;
     }
 
     const playerName = readline.question("What is your name? ");
-    Player.handlePlayerLogin(playerName);
+    
+    const playerRes = await fetch(`${SERVER_URL}/players`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: playerName })
+    });
+    const { player, isNew } = await playerRes.json();
+
+    if (isNew) {
+        console.log(`Welcome, ${player.name}! Added you to the player database.`);
+    } else if (player.lowestTime) {
+        console.log(`Hi ${player.name}! Your previous lowest time was ${player.lowestTime} seconds.`);
+    } else {
+        console.log(`Welcome back, ${player.name}! You don't have a recorded best time yet.`);
+    }
 
     const level = readline.question("Choose difficulty (easy / medium / hard): ");
     const filteredRiddles = riddlesData.filter(r => r.difficulty?.toLowerCase() === level.toLowerCase());
@@ -114,10 +122,23 @@ function playGame() {
         totalGameTime += durationInSeconds;
     }
 
-    Player.updatePlayerScore(playerName, totalGameTime);
+    const updateRes = await fetch(`${SERVER_URL}/players/${player.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ totalGameTime })
+    });
+    const updateData = await updateRes.json();
+
+    console.log(`\nGreat job, ${player.name}!`);
+    console.log(`Your time: ${totalGameTime} seconds`);
+    if (updateData.isNewRecord) {
+        console.log(`New record! Time updated.`);
+    } else {
+        console.log(`(Best: ${updateData.player.lowestTime})`);
+    }
 }
 
-function createRiddle() {
+async function createRiddle() {
     console.log("\n--- Create New Riddle ---");
     const name = readline.question("Enter riddle name: ");
     const taskDescription = readline.question("Enter description: ");
@@ -126,11 +147,7 @@ function createRiddle() {
     const timeLimitInput = readline.question("Enter time limit in seconds (optional): ");
     const hint = readline.question("Enter a hint (optional): ");
 
-    const riddles = loadRiddlesDB();
-    const newId = riddles.length > 0 ? Math.max(...riddles.map(r => r.id)) + 1 : 1;
-
     const newRiddle = {
-        id: newId,
         name,
         taskDescription,
         correctAnswer,
@@ -139,13 +156,19 @@ function createRiddle() {
         hint: hint || undefined
     };
 
-    riddles.push(newRiddle);
-    saveRiddlesDB(riddles);
-    console.log("✔ New riddle successfully saved to db.txt!");
+    const response = await fetch(`${SERVER_URL}/riddles`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newRiddle)
+    });
+
+    if (response.ok) {
+        console.log("✔ New riddle successfully saved via server!");
+    }
 }
 
-function readRiddles() {
-    const riddles = loadRiddlesDB();
+async function readRiddles() {
+    const riddles = await loadRiddlesDB();
     if (riddles.length === 0) {
         console.log("No riddles in database.");
         return;
@@ -157,55 +180,87 @@ function readRiddles() {
     });
 }
 
-function updateRiddle() {
-    const riddles = loadRiddlesDB();
+async function updateRiddle() {
+    const riddles = await loadRiddlesDB();
     if (riddles.length === 0) {
         console.log("No riddles to update.");
         return;
     }
 
-    readRiddles();
+    await readRiddles();
     const idInput = readline.question("Enter the ID of the riddle you want to update: ");
     const id = parseInt(idInput);
 
-    const riddleIndex = riddles.findIndex(r => r.id === id);
-    if (riddleIndex === -1) {
+    const target = riddles.find(r => r.id === id);
+    if (!target) {
         console.log("Riddle with this ID not found.");
         return;
     }
 
-    console.log(`Updating riddle: ${riddles[riddleIndex].name}`);
+    console.log(`Updating riddle: ${target.name}`);
     const newName = readline.question(`New name (leave blank to keep current): `);
     const newDesc = readline.question(`New description (leave blank to keep current): `);
     const newAns = readline.question(`New correct answer (leave blank to keep current): `);
 
-    if (newName) riddles[riddleIndex].name = newName;
-    if (newDesc) riddles[riddleIndex].taskDescription = newDesc;
-    if (newAns) riddles[riddleIndex].correctAnswer = newAns;
+    const updatedFields = {};
+    if (newName) updatedFields.name = newName;
+    if (newDesc) updatedFields.taskDescription = newDesc;
+    if (newAns) updatedFields.correctAnswer = newAns;
 
-    saveRiddlesDB(riddles);
-    console.log("✔ Riddle updated successfully!");
+    const response = await fetch(`${SERVER_URL}/riddles/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedFields)
+    });
+
+    if (response.ok) {
+        console.log("✔ Riddle updated successfully via server!");
+    }
 }
 
-function deleteRiddle() {
-    const riddles = loadRiddlesDB();
+async function deleteRiddle() {
+    const riddles = await loadRiddlesDB();
     if (riddles.length === 0) {
         console.log("No riddles to delete.");
         return;
     }
 
-    readRiddles();
+    await readRiddles();
     const idInput = readline.question("Enter the ID of the riddle you want to delete: ");
     const id = parseInt(idInput);
 
-    const filteredRiddles = riddles.filter(r => r.id !== id);
+    const response = await fetch(`${SERVER_URL}/riddles/${id}`, {
+        method: 'DELETE',
+    });
 
-    if (filteredRiddles.length === riddles.length) {
+    if (response.ok) {
+        console.log("✔ Riddle deleted successfully via server!");
+    } else {
         console.log("Riddle ID not found.");
-        return;
     }
-
-    saveRiddlesDB(filteredRiddles);
-    console.log("✔ Riddle deleted successfully!");
 }
+
+async function showLeaderboard() {
+    try {
+        const response = await fetch(`${SERVER_URL}/players`);
+        const players = await response.json();
+        
+        const validPlayers = players.filter(p => p.lowestTime !== null);
+        validPlayers.sort((a, b) => a.lowestTime - b.lowestTime);
+
+        console.log("\n🏆 Leaderboard:");
+        if (validPlayers.length === 0) {
+            console.log("No completed games yet!");
+            return;
+        }
+
+        validPlayers.forEach((p, index) => {
+            console.log(`${index + 1}. ${p.name} - ${p.lowestTime} seconds`);
+        });
+    } catch (e) {
+        console.error("Error fetching leaderboard:", e.message);
+    }
+}
+
+mainManager();
 mainMenu();
