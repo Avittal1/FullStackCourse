@@ -30,14 +30,13 @@ ORDER BY release_year;
 -- ==========================================
 
 -- 1. Present the product name, and the sales amount rounded.
--- (הערה: תלוי בשמות העמודות המדויקים בטבלה, למשל product_name ו-sales_amount)
-SELECT product_name, ROUND(sales_amount, 2) AS rounded_sales
+SELECT product_name, ROUND(sales, 2) AS rounded_sales
 FROM DsOne_orders;
 
 -- 2. For products in a sub category that begin with the letter "S/s", present the sub_category, product name unit cost rounded down.
 SELECT sub_category, product_name, FLOOR(unit_cost) AS rounded_down_cost
 FROM DsOne_orders
-WHERE sub_category LIKE 'S%';
+WHERE sub_category LIKE 'S%' OR sub_category LIKE 's%';
 
 -- 3. Present all the products that have the letter "e" and are longer than 7. Order the results by length of name in descending order.
 SELECT product_name
